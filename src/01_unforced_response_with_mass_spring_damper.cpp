@@ -4,7 +4,7 @@
 #include "Eigen/Core"
 #include <iostream>
 #include <fstream>
-#include "arcanain_control_tutorial/matplotlibcpp.h"
+#include "arcanain_modern_control_tutorial/matplotlibcpp.h"
 
 using namespace Eigen;
 using namespace std;
@@ -18,7 +18,7 @@ class RungeKuttaPublisher : public rclcpp::Node
 public:
   // コンストラクタ
   RungeKuttaPublisher()
-  : Node("RungeKutta") // Nodeクラスのコンストラクタを呼び出し、ノード名を指定
+  : Node("unforced_response_with_mass_spring_damper") // Nodeクラスのコンストラクタを呼び出し、ノード名を指定
   {
     InitialResponse();
     // 500ミリ秒ごとにtimer_callback関数を呼び出すタイマーを作成
@@ -43,7 +43,7 @@ private:
     RCLCPP_INFO(this->get_logger(), "%lf", tt);
     RCLCPP_INFO(this->get_logger(), "%lf", Y(0,0));
     last_time = current_time;
-    if (tt > 10.0){
+    if (tt > 15.0){
       rclcpp::shutdown();
     }
   }
@@ -90,9 +90,6 @@ private:
 
     Y = Eigen::MatrixXd(1, 1);
     Y(0, 0) = 0;
-
-    ofs.open("runge_kutta_results.csv");
-    ofs << "time," << "y" << endl;
   }
 
   void store_data(double time, double value){

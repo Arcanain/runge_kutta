@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(runge_kutta)
+project(arcanain_modern_control_tutorial)
 
 # Set the RPATH
 set(CMAKE_INSTALL_RPATH "/usr/local/lib")
@@ -19,18 +19,13 @@ find_package(Eigen3 REQUIRED)
 find_package(PythonLibs REQUIRED)
 find_package(std_msgs REQUIRED)
 
-# talker
-add_executable(talker src/publisher_member_function.cpp)
-ament_target_dependencies(talker rclcpp std_msgs)
-
-# talker
-add_executable(RungeKutta src/runge_kutta_pub.cpp)
-ament_target_dependencies(RungeKutta rclcpp std_msgs Eigen3)
+# 01_unforced_response_with_mass_spring_damper
+add_executable(unforced_response_with_mass_spring_damper src/01_unforced_response_with_mass_spring_damper.cpp)
+ament_target_dependencies(unforced_response_with_mass_spring_damper rclcpp std_msgs Eigen3)
 
 # Install Cpp executables
 install(TARGETS
-  talker
-  RungeKutta
+  unforced_response_with_mass_spring_damper
   DESTINATION lib/${PROJECT_NAME}
 )
 
