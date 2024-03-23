@@ -23,9 +23,14 @@ find_package(std_msgs REQUIRED)
 add_executable(unforced_response_with_mass_spring_damper src/01_unforced_response_with_mass_spring_damper.cpp)
 ament_target_dependencies(unforced_response_with_mass_spring_damper rclcpp std_msgs Eigen3)
 
+# feedback_control_of_siso_system
+add_executable(feedback_control_of_siso_system src/feedback_control_of_siso_system.cpp)
+ament_target_dependencies(feedback_control_of_siso_system rclcpp std_msgs Eigen3)
+
 # Install Cpp executables
 install(TARGETS
   unforced_response_with_mass_spring_damper
+  feedback_control_of_siso_system
   DESTINATION lib/${PROJECT_NAME}
 )
 
