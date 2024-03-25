@@ -40,7 +40,7 @@ private:
     double dt = (current_time - last_time).seconds();
     tt += dt;
     get_RungeKutta(dt);
-    std::cout << "tt:" << X(1, 0) << std::endl;
+    std::cout << "tt:" << tt << std::endl;
     std::cout << "x1:" << X(1, 0) << std::endl;
     store_data(tt, X(0, 0), X(1, 0));
     last_time = current_time;
@@ -133,11 +133,7 @@ private:
   Eigen::MatrixXd A;
   Eigen::MatrixXd B;
   Eigen::MatrixXd C;
-  Eigen::MatrixXd D;
   Eigen::MatrixXd X;
-  Eigen::MatrixXd dX;
-  Eigen::MatrixXd u;
-  Eigen::MatrixXd Y;
   std::vector<double> data_time;
   std::vector<double> data_x1;
   std::vector<double> data_x2;
