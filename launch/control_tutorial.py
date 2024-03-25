@@ -14,8 +14,14 @@ def generate_launch_description():
         output="screen",
     )
 
+    feedback_control_of_siso_system_node = Node(
+        package=package_name,
+        executable='feedback_control_of_siso_system',
+        output="screen",
+    )
+
     nodes = [
-        unforced_response_with_mass_spring_damper_node,
+        feedback_control_of_siso_system_node,
     ]
 
     return LaunchDescription(nodes)
