@@ -3,6 +3,7 @@ project(arcanain_modern_control_tutorial)
 
 # Set the RPATH
 set(CMAKE_INSTALL_RPATH "/usr/local/lib")
+set(EXTERNAL_LIB_HEADERS "cpp_robotics")
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -27,6 +28,8 @@ ament_target_dependencies(unforced_response_with_mass_spring_damper rclcpp std_m
 add_executable(feedback_control_of_siso_system src/02_feedback_control_of_siso_system.cpp)
 ament_target_dependencies(feedback_control_of_siso_system rclcpp std_msgs Eigen3)
 
+add_subdirectory(cpp_robotics)
+
 # Install Cpp executables
 install(TARGETS
   unforced_response_with_mass_spring_damper
@@ -38,6 +41,12 @@ include_directories(
   include
   ${EIGEN3_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cpp_robotics/include
+)
+
+target_include_directories(
+  feedback_control_of_siso_system PRIVATE
+  ${EXTERNAL_LIB_HEADERS}
 )
 
 # Install other files
