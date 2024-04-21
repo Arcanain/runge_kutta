@@ -20,8 +20,14 @@ def generate_launch_description():
         output="screen",
     )
 
+    optimal_control_using_lqr_node = Node(
+        package=package_name,
+        executable='optimal_control_using_lqr',
+        output="screen",
+    )
+
     nodes = [
-        feedback_control_of_siso_system_node,
+        optimal_control_using_lqr_node,
     ]
 
     return LaunchDescription(nodes)

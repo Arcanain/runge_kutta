@@ -28,12 +28,17 @@ ament_target_dependencies(unforced_response_with_mass_spring_damper rclcpp std_m
 add_executable(feedback_control_of_siso_system src/02_feedback_control_of_siso_system.cpp)
 ament_target_dependencies(feedback_control_of_siso_system rclcpp std_msgs Eigen3)
 
+# feedback_control_of_siso_system
+add_executable(optimal_control_using_lqr src/03_optimal_control_using_lqr.cpp)
+ament_target_dependencies(optimal_control_using_lqr rclcpp std_msgs Eigen3)
+
 add_subdirectory(cpp_robotics)
 
 # Install Cpp executables
 install(TARGETS
   unforced_response_with_mass_spring_damper
   feedback_control_of_siso_system
+  optimal_control_using_lqr
   DESTINATION lib/${PROJECT_NAME}
 )
 
