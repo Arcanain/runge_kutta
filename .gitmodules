@@ -1,0 +1,3 @@
+[submodule "cpp_robotics"]
+	path = cpp_robotics
+	url = https://github.com/Kotakku/cpp_robotics.git
