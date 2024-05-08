@@ -41,17 +41,23 @@ private:
     current_time = this->get_clock()->now();
     double dt = (current_time - last_time).seconds();
     tt += dt;
-    X = get_RungeKutta(X, Af, dt);
-    X2 = get_RungeKutta(X2, Af2, dt);
-    Eigen::MatrixXd ut = - f * X;
-    Eigen::MatrixXd ut2 = - f2 * X2;
     std::cout << "tt:" << tt << std::endl;
+
+    //r = 1
+    X = get_RungeKutta(X, Af, dt);
+    Eigen::MatrixXd ut = - f * X;
     std::cout << "x_1:" << X(1, 0) << std::endl;
-    std::cout << "x2_1:" << X2(1, 0) << std::endl;
     std::cout << "ut:" << ut << std::endl;
+
+    //r = 3
+    X2 = get_RungeKutta(X2, Af2, dt);
+    Eigen::MatrixXd ut2 = - f2 * X2;
+    std::cout << "x2_1:" << X2(1, 0) << std::endl;
     std::cout << "ut2:" << ut2 << std::endl;
+
     store_data(tt, X, X2, ut(0, 0), ut2(0, 0));
     last_time = current_time;
+    
     if (tt > 5.0){
       plot_xt_response(data_x1, data_x2);
       plot_xt_response(data_x2_1, data_x2_2);
@@ -113,24 +119,13 @@ private:
     Q = Eigen::MatrixXd(2, 2);
     Q << 13.0, 0.0, 0.0, 1.0;
 
-    Q2 = Eigen::MatrixXd(2, 2);
-    Q2 << 1.0, 0.0, 0.0, 1.0;
-
-
     //r = 1
     r = Eigen::MatrixXd(1, 1);
     r << 1.0;
-    //r = 3
-    r2 = Eigen::MatrixXd(1, 1);
-    r2 << 3.0;
-
+    
     X = Eigen::MatrixXd(2, 1);
     X(0, 0) = -1;
     X(1, 0) = 0;
-
-    X2 = Eigen::MatrixXd(2, 1);
-    X2(0, 0) = X(0, 0);
-    X2(1, 0) = X(1, 0);
 
     A = Eigen::MatrixXd(2, 2);
     B = Eigen::MatrixXd(2, 1);
@@ -140,21 +135,35 @@ private:
     C << 1.0, 0.0;
 
     P = care(A, B, Q, r);
-    P2 = care(A, B, Q2, r2);
     f = r.inverse() * B.transpose() * P;
-    f2 = r2.inverse() * B.transpose() * P2;
 
     std::cout << "P:" << std::endl << P << std::endl;
     std::cout << "f:" << std::endl << f << std::endl;
 
     // calculate the matrix Af
     Af = A - B * f;
-    Af2 = A - B * f2;
-
     Af.resize(2, 2);
+    //std::cout << "Af:" << std::endl << Af << std::endl;
+
+    //-------------------------------------------------------
+    //r = 3
+    
+    r2 = Eigen::MatrixXd(1, 1);
+    r2 << 3.0;
+
+    Q2 = Eigen::MatrixXd(2, 2);
+    Q2 << 1.0, 0.0, 0.0, 1.0;
+
+    X2 = Eigen::MatrixXd(2, 1);
+    X2(0, 0) = X(0, 0);
+    X2(1, 0) = X(1, 0);
+
+    P2 = care(A, B, Q2, r2);
+    f2 = r2.inverse() * B.transpose() * P2;
+    // calculate the matrix Af
+    Af2 = A - B * f2;
     Af2.resize(2, 2);
 
-    //std::cout << "Af:" << std::endl << Af << std::endl;
     
   }
 
