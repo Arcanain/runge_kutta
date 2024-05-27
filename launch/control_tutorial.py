@@ -26,8 +26,14 @@ def generate_launch_description():
         output="screen",
     )
 
+    oinverted_pendulum_control_using_lqr_node = Node(
+        package=package_name,
+        executable='inverted_pendulum_control_using_lqr',
+        output="screen",
+    )
+
     nodes = [
-        optimal_control_using_lqr_node,
+        oinverted_pendulum_control_using_lqr_node,
     ]
 
     return LaunchDescription(nodes)
